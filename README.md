@@ -75,7 +75,7 @@ Resume: sample_resume.pdf
 
 → Gemini generates 5 role-specific questions.
 → Simulates smart answers based on your resume.
-→ Saves everything as a transcript.
+→ Saves everything as a transcript in both text file and pdf file format.
 
 ---
 
@@ -85,4 +85,4 @@ MIT License. Free to use and modify.
 --- 
 
 ### 🧑‍💻 Author
-Built with ❤️ using Python and Gemini 1.5 Flash.
+Built using Python and Gemini 1.5 Flash.
