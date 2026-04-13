@@ -1,4 +1,5 @@
 import os
+import json
 from groq import Groq
 from dotenv import load_dotenv
 
@@ -15,19 +16,28 @@ def generate_interview_questions(resume_text, job_title, years_experience):
     {resume_text}
     -----------------------------
 
-    Based on this information, please generate 5 HR-style interview questions that are:
+    Based on this information, please generate 5 HR-style interview questions.
+    Make the questions:
     - Role-specific
     - Behavior-based or situational
     - Based on the resume content
+
+    You MUST return the output ONLY as a valid JSON object with a single key "questions" which contains a list of string questions.
     """
 
     chat_completion = client.chat.completions.create(
         messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
+            {"role": "system", "content": "You are an expert HR recruiter. Always output valid JSON."},
+            {"role": "user", "content": prompt}
         ],
         model="llama-3.3-70b-versatile",
+        response_format={"type": "json_object"}
     )
-    return chat_completion.choices[0].message.content
+    
+    response_text = chat_completion.choices[0].message.content
+    try:
+        # We parse the JSON output back into a Python List
+        data = json.loads(response_text)
+        return data.get("questions", [])
+    except json.JSONDecodeError:
+        return []
