@@ -1,11 +1,12 @@
 # interview_simulator.py
 
+import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-# Make sure this matches your prompt_generator.py
-GEMINI_API_KEY = "AIzaSyBxa8LFSriN8RvsH-F6C40XmJ7FCUPFh6g"
+load_dotenv() # Loads the .env file
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-genai.configure(api_key=GEMINI_API_KEY)
 
 
 def simulate_interview(resume_text, job_title, years_experience, questions_text):
