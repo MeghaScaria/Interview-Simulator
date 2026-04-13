@@ -1,11 +1,9 @@
-# prompt_generator.py
+import os
+from groq import Groq
+from dotenv import load_dotenv
 
-import google.generativeai as genai
-
-# Replace with your own Gemini API key
-GEMINI_API_KEY = "AIzaSyBxa8LFSriN8RvsH-F6C40XmJ7FCUPFh6g"
-
-genai.configure(api_key=GEMINI_API_KEY)
+load_dotenv() # Loads the .env file
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
 def generate_interview_questions(resume_text, job_title, years_experience):
@@ -23,6 +21,13 @@ def generate_interview_questions(resume_text, job_title, years_experience):
     - Based on the resume content
     """
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(prompt)
-    return response.text
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        model="llama-3.3-70b-versatile",
+    )
+    return chat_completion.choices[0].message.content

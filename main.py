@@ -6,8 +6,8 @@ from interview_simulator import simulate_interview
 from transcript_saver import save_transcript_as_text, save_transcript_as_pdf
 
 resume_path = "sample_resume.pdf"
-job_title = "Java Developer"
-years_experience = "5 years"
+job_title = "AI ML Engineer"
+years_experience = "0 years"
 
 try:
     resume_text = parse_resume(resume_path)
