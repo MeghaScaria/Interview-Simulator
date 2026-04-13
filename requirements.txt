@@ -1,4 +1,6 @@
-google-generativeai
-fpdf
+streamlit==1.39.0
+groq
 pdfplumber
 python-docx
+python-dotenv
+edge-tts
