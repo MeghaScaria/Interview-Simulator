@@ -1,88 +1,60 @@
-# Interview-Simulator
-# 🤖 AI-Powered Interview Simulator
+# 🤖 AI Live Interview Simulator
 
-This Python project simulates a realistic HR-style interview using Google Gemini 1.5 Flash and your resume.
+A professional, state-of-the-art interactive mock interview simulator. This application leverages extremely fast open-weights LLMs via the Groq API and real-time audio manipulation to instantly deliver realistic, highly personalized mock interviews based on your specific resume!
 
 ---
 
 ## 🚀 Features
 
-- Upload your **resume** (PDF or DOCX)
-- Enter your **target job title** and **years of experience**
-- AI (Gemini) generates:
-  - Tailored interview questions
-  - Simulated answers (based on your resume)
-- Saves the interview as:
-  - `interview_transcript.txt`
-  - `interview_transcript.pdf`
+- **Interactive UI (Streamlit)**: Complete modern messaging-app layout mimicking a live chat with an expert HR Recruiter.
+- **Two Interview Modes**: Toggle between **Technical** (evaluates deeply on architecture, languages, frameworks) or **Behavioral/HR** (evaluates on soft-skills and conflict resolution).
+- **Two-Way Audio Integration**: 
+  - **Text-to-Speech (TTS)**: Fully integrated with Microsoft Edge's Neural TTS (`edge-tts`). The AI physically speaks its questions out loud to you using a professional voice at a custom speed.
+  - **Speech-to-Text (STT)**: Built-in microphone support. Speak out your answers and the app instantly transcribes them using **Groq's Whisper-Large-V3-Turbo** model!
+- **Stateful Grading Loop**: The AI dynamically processes your background, generates specific questions for you, listens to your answers in real time, grades them out of 10, and offers actionable resume-tailored feedback.
 
 ---
 
-## 🛠️ Requirements
+## 🛠️ Tech Stack 
 
-- Python 3.8+
-- Google Gemini API key (free from [Makersuite](https://makersuite.google.com/app/apikey))
-
-### 📦 Install Dependencies
-
-### 🧠 How It Works
-resume_parser.py – Extracts text from your resume
-
-prompt_generator.py – Uses Gemini to create interview questions
-
-interview_simulator.py – Simulates the candidate's answers
-
-transcript_saver.py – Saves the interview to TXT and PDF
-
-main.py – Runs the full workflow
+- **Frontend Framework**: [Streamlit](https://streamlit.io/)
+- **Core LLM Engine**: LLaMA-3.3-70b-Versatile (via [Groq SDK](https://groq.com/))
+- **Speech-to-Text**: Whisper-Large-V3-Turbo (via [Groq SDK](https://groq.com/))
+- **Text-to-Speech**: `edge-tts` (Microsoft Azure Neural TTS)
+- **Document Processing**: `pdfplumber`, `python-docx`
+- **Environment Management**: `python-dotenv`
 
 ---
 
-### 🧪 Run the Project
-Replace your-api-key-here in prompt_generator.py and interview_simulator.py with your Gemini key.
+## ⚙️ How to Setup
 
-Put your resume file (e.g., sample_resume.pdf) in the same folder.
+1. **Clone the repository** and ensure you have `uv` or `pip` installed.
+2. **Install Dependencies** (If using standard python):
+   ```bash
+   pip install streamlit groq pdfplumber python-docx python-dotenv edge-tts gtts
+   ```
+3. **Configure Environment Variables**:
+   Create a new file in the root folder specifically named `.env` and paste your free Groq API key:
+   ```env
+   GROQ_API_KEY=your-api-key-here
+   ```
+4. **Run the App!**
+   Execute this command inside your terminal to launch the simulator in your browser:
+   ```bash
+   streamlit run app.py
+   ```
 
-Open terminal and run:
+---
 
-bash
-Copy
-Edit
-python main.py
-###📁 Output
-After running, you'll get:
+## 🧠 Architectural Workflow
 
-✅ Printed Q&A in your terminal
-
-📄 interview_transcript.txt
-
-📄 interview_transcript.pdf
+1. **`app.py`**: Handles Streamlit session states, constructs the interactive chat UI, and ties all backend functions together.
+2. **`prompt_generator.py`**: Interacts with Llama-3 using strict JSON schemas to generate custom technical/behavioral interview questions based solely on your resume background.
+3. **`interview_simulator.py`**: Acts as an AI grader that reviews your specific answer against the original question and determines what you missed.
+4. **`resume_parser.py`**: Robustly scrapes text arrays from your uploaded `.pdf` or `.docx` file.
+5. **`audio_utils.py`**: Asynchronous helper class that handles high-speed Microsoft Neural text-to-speech rendering, and passes Streamlit audio captures into Groq's transcription algorithms.
 
 ---
 
 ### 🔒 Disclaimer
-This tool is for educational and simulation purposes. It does not guarantee hiring outcomes.
-
----
-
-### 📌 Example Use Case
-text
-Copy
-Edit
-Job Title: Java Developer
-Experience: 5 years
-Resume: sample_resume.pdf
-
-→ Gemini generates 5 role-specific questions.
-→ Simulates smart answers based on your resume.
-→ Saves everything as a transcript in both text file and pdf file format.
-
----
-
-### 🤝 License
-MIT License. Free to use and modify.
-
---- 
-
-### 🧑‍💻 Author
-Built using Python and Gemini 1.5 Flash.
+This tool is strictly for professional development and educational practice. It does not predict real-life hiring outcomes.
